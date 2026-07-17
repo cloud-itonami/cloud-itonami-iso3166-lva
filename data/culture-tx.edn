@@ -1,0 +1,14 @@
+;; data/culture-tx.edn — DataScript tx-data derived from src/culture/facts.cljc
+;; `culture.facts/catalog` (ADR-2607171400 addendum 2, Wave 1 country-level).
+;; Same shape across every cloud-itonami-iso3166-* sibling. Do not hand-edit;
+;; regenerate from the catalog.
+
+[
+#:culture{:id "lva.dish.rupjmaize", :name "Rupjmaize", :country "LVA", :kind :dish, :summary "Traditional dark bread made from rye, considered the staple of the Latvian diet.", :url "https://en.wikipedia.org/wiki/Rupjmaize", :url-provenance :wikipedia-en, :retrieved-at "2026-07-17"}
+#:culture{:url "https://en.wikipedia.org/wiki/Pirozhki", :id "lva.dish.piragi", :kind :dish, :name-local "Speķa pīrāgi", :country "LVA", :retrieved-at "2026-07-17", :summary "Crescent-shaped buns of leavened dough, called speķrauši or speķa pīrāgi in Latvia, traditionally filled with smoked fatback and onion.", :name "Pīrāgi", :url-provenance :wikipedia-en}
+#:culture{:url "https://en.wikipedia.org/wiki/Grey_peas", :id "lva.dish.grey-peas", :kind :dish, :name-local "Pelēkie zirņi ar speķi", :country "LVA", :retrieved-at "2026-07-17", :summary "Traditional Latvian Christmas dish of large grey peas with bacon; Latvian large grey peas were entered into the EU Register of protected geographical indications for national products in 2015.", :name "Grey peas with bacon", :url-provenance :wikipedia-en}
+#:culture{:id "lva.beverage.riga-black-balsam", :name "Riga Black Balsam", :country "LVA", :kind :beverage, :summary "Traditional Latvian herbal balsam often considered the national drink of Latvia, a medicinal drink created in 1752 that has evolved into a popular liqueur.", :url "https://en.wikipedia.org/wiki/Riga_Black_Balsam", :url-provenance :wikipedia-en, :retrieved-at "2026-07-17"}
+#:culture{:id "lva.craft.lielvarde-belt", :name "Lielvārde belt", :country "LVA", :kind :craft, :summary "Traditional Latvian woven belt with 22 ancient symbols, whose design appears on Latvian banknotes and has inspired artists and folklore enthusiasts.", :url "https://en.wikipedia.org/wiki/Lielv%C4%81rde_Belt", :url-provenance :wikipedia-en, :retrieved-at "2026-07-17"}
+#:culture{:id "lva.festival.jani", :name "Jāņi", :country "LVA", :kind :festival, :summary "Annual Latvian summer solstice festival celebrated on 23-24 June, featuring wreath-making, bonfires, singing and the symbolic use of plants for renewal and fertility.", :url "https://en.wikipedia.org/wiki/J%C4%81%C5%86i", :url-provenance :wikipedia-en, :retrieved-at "2026-07-17"}
+#:culture{:id "lva.heritage.historic-centre-of-riga", :name "Historic Centre of Riga", :country "LVA", :kind :heritage, :summary "Vecrīga (Old Riga) is part of a UNESCO World Heritage Site listed as \"Historic Centre of Riga\", designated in 1997.", :url "https://en.wikipedia.org/wiki/Vecr%C4%ABga", :url-provenance :wikipedia-en, :retrieved-at "2026-07-17"}
+]
