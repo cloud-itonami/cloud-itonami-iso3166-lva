@@ -7,4 +7,40 @@
  :itonami.blueprint/governor :market-entry-compliance-governor
  :itonami.blueprint/robotics false
  :itonami.blueprint/required-technologies [:identity :forms :dmn :bpmn :audit-ledger]
- :itonami.blueprint/status :public-oss}
+ :itonami.blueprint/status :public-oss
+ :itonami.blueprint/maturity :implemented
+ :itonami.blueprint/implemented-slice
+ "src/marketentry/* (langgraph-clj StateGraph actor, compiled via
+ `operation/build` -> `g/state-graph` -> `g/compile-graph` with
+ `interrupt-before #{:request-approval}`): facts.cljc (official
+ spec-basis catalog -- Uzņēmumu reģistrs business registration, PIL/
+ IUB procurement-law compliance, EIS platform registration, VID VAT
+ registration; keeps IUB's legal/regulatory-oversight role and VDAA's
+ separate EIS technical-operator role, renamed from VRAA in 2024, as
+ two DISTINCT catalog fields), governor.cljc (Market-Entry Compliance
+ Governor -- spec-basis HARD check, evidence-incomplete HARD check,
+ `:ur-registration-missing` HARD check independently verifying
+ `:has-ur-registration?` when `:requires-ur-registration?` is true,
+ `:platform-operator-fused` HARD check independently verifying a
+ `:jurisdiction/assess` proposal never collapses IUB and VDAA into one
+ fused authority -- the FLAGSHIP new check for this vertical, grounded
+ in the regulator/operator split verified for EIS (eis.gov.lv) --,
+ engagement-fee-mismatch independent recompute, `:vat-unverified` HARD
+ check (VID VAT Register), confidence-floor/actuation gate, plus
+ double-draft/double-submit guards), store.cljc (MemStore +
+ DatomicStore via `io.github.kotoba-lang/langchain-store`
+ (`ls/enc`/`ls/dec*`/`ls/read-stream`/`ls/append-blob!`) instead of a
+ hand-rolled EDN-blob codec), registry.cljc (pure-function
+ filing-draft/filing-submit record construction + fee recompute),
+ marketentryllm.cljc (mock MarketEntry Advisor, with an injectable
+ `:fuse-platform-operator?` failure mode alongside the shared
+ `:no-spec?` one), operation.cljc (intake -> advise -> govern -> decide
+ -> [request-approval ->] commit/hold StateGraph, `store/append-ledger!`
+ called from both the `:commit` and `:hold` nodes), phase.cljc (0->3
+ rollout, `:filing/draft`/`:filing/submit` permanently excluded from
+ every phase's `:auto` set). Tests cover the governor contract
+ (including the IUB/VDAA distinction, both the clean path and the
+ fused-claim HARD hold), facts, phase, registry, store parity
+ (MemStore vs DatomicStore) and ledger append-only-ness across both
+ backends, plus this repo's separate `culture` domain namespace, left
+ untouched."}
