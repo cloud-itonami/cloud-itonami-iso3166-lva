@@ -22,9 +22,15 @@
 ## Offer
 
 - registration walkthrough for the Electronic Procurement System (EIS,
-  eis.gov.lv), where most Latvian public tenders are conducted, with
-  notice monitoring via IUB (Iepirkumu uzraudzības birojs / Procurement
-  Monitoring Bureau)
+  eis.gov.lv), where most Latvian public tenders are conducted, plus
+  procurement-law compliance and notice monitoring under IUB
+  (Iepirkumu uzraudzības birojs / Procurement Monitoring Bureau) —
+  **note**: IUB is the legal/regulatory-oversight authority; EIS
+  itself is technically operated by a separate agency, VDAA (Valsts
+  digitālās attīstības aģentūra, renamed from VRAA in 2024) — this
+  blueprint's Market-Entry Compliance Governor keeps that distinction
+  explicit rather than fusing the two (see README Implementation
+  status)
 - business/tax registration checklist: an entry in the Register of
   Enterprises (Uzņēmumu reģistrs, UR, ur.gov.lv), a state institution
   providing free official company information

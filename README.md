@@ -68,6 +68,100 @@ Resolves via [`kotoba-lang/iso3166`](https://github.com/kotoba-lang/iso3166)
 See [`docs/business-model.md`](docs/business-model.md) and
 [`docs/operator-guide.md`](docs/operator-guide.md).
 
+## Implementation status
+
+**`:implemented`.** `src/marketentry/*` is a running langgraph-clj
+StateGraph actor (`operation/build`): a MarketEntry-LLM advisor
+(`marketentryllm.cljc`) sealed into a single `:advise` node, whose
+proposal is ALWAYS routed through the Market-Entry Compliance
+Governor (`governor.cljc`) and the rollout phase gate (`phase.cljc`)
+before anything touches the SSoT (`store.cljc`, MemStore +
+DatomicStore via `io.github.kotoba-lang/langchain-store`).
+
+```
+clojure -M:dev:test    # governor contract + facts + phase + registry + store
+clojure -M:dev:run     # walk a demo engagement through the full actor graph
+```
+
+### Governor checks (priority order, all HARD -- unoverridable by a human approver)
+
+| # | Check | Grounded in |
+|---|-------|-------------|
+| 1 | Spec-basis (no fabricated jurisdiction) | `marketentry.facts/spec-basis` |
+| 2 | Evidence incomplete | the jurisdiction's 4-item `:required-evidence` checklist |
+| 3 | `:ur-registration-missing` | Uzņēmumu reģistrs (Register of Enterprises), state institution under the Ministry of Justice — [ur.gov.lv](https://ur.gov.lv/) |
+| 4 | `:platform-operator-fused` (**flagship**) | EIS regulator/operator split — see below |
+| 5 | Engagement-fee mismatch | independent recompute (`base-fee + monthly-rate x monitoring-months`) |
+| 6 | `:vat-unverified` | Valsts ieņēmumu dienests (VID), State Revenue Service — VAT Register, VAT number format `LV` + 11 digits |
+| 7 | Confidence floor / actuation gate | `:filing/draft`/`:filing/submit` always escalate |
+| — | Double-draft / double-submit guards | dedicated `:drafted?`/`:submitted?` facts |
+
+### The flagship check: IUB is not VDAA
+
+The central fabrication trap for this jurisdiction is collapsing two
+different authorities into one. This actor keeps them apart on
+purpose, in the catalog (`marketentry.facts/platform-operator-spec-basis`)
+and in a dedicated governor check
+(`marketentry.governor/platform-operator-fusion-violations`):
+
+- **IUB** (Iepirkumu uzraudzības birojs — Procurement Monitoring
+  Bureau) is the **legal/regulatory-oversight authority**: it
+  publishes procurement notices and enforces Publisko iepirkumu
+  likums (PIL, Public Procurement Law, current text on
+  [likumi.lv](https://likumi.lv/)). 2024 total procurement volume:
+  €5.45bn, ~13% of GDP.
+- **EIS** (Elektronisko iepirkumu sistēma), the transactional
+  e-procurement platform at [eis.gov.lv](https://www.eis.gov.lv/), is
+  **NOT operated by IUB**. It is technically maintained by **VDAA**
+  (Valsts digitālās attīstības aģentūra — State Digital Development
+  Agency), under the Ministry of Smart Administration and Regional
+  Development, live since 2009-06-01 (Cabinet of Ministers Order
+  No. 220). VDAA was renamed from **VRAA** (State Regional
+  Development Agency, est. 2007) in **2024**.
+
+A `:jurisdiction/assess` proposal that states or implies "IUB
+operates EIS" -- omits the distinction, fuses the two authorities into
+one value, or cites either against the wrong catalogued value -- is a
+HARD violation the governor rejects unconditionally
+(`test/marketentry/governor_contract_test.clj`'s
+`fused-platform-operator-claim-is-held-and-unoverridable` and
+`clean-assess-correctly-distinguishes-iub-from-vdaa`).
+
+### Sources cited per check
+
+- Business registration: Uzņēmumu reģistrs (Register of Enterprises),
+  state institution under the Ministry of Justice; free official
+  company data (open data, CC0, daily refresh) — [ur.gov.lv](https://ur.gov.lv/)
+- Procurement law: Publisko iepirkumu likums (PIL), current text —
+  [likumi.lv](https://likumi.lv/); oversight/enforcement — Iepirkumu
+  uzraudzības birojs (IUB)
+- E-procurement platform: EIS (Elektronisko iepirkumu sistēma) —
+  [eis.gov.lv](https://www.eis.gov.lv/), technically operated by VDAA
+  (renamed from VRAA in 2024)
+- Tax/VAT registration: Valsts ieņēmumu dienests (VID), State Revenue
+  Service — VAT Register, VAT number format `LV` + 11 digits,
+  registration decision within 15 business days of application
+
+### Actuation
+
+- `:engagement/intake` may auto-commit at phase 3 when the governor is
+  clean (no portal-facing risk).
+- `:jurisdiction/assess` always escalates to human approval, at every
+  phase, even when clean.
+- `:filing/draft` and `:filing/submit` are **permanently excluded**
+  from every phase's `:auto` set (`phase.cljc`) AND are members of the
+  governor's own `high-stakes` set (`governor.cljc`) that forces
+  escalation independently of phase. Two layers, not one, agree that
+  drafting a real EIS portal package or submitting a real EIS portal
+  registration is always a human market-entry operator's call.
+- Every HARD violation is unoverridable: a human approver sees the
+  `:hold` disposition and its `:violations`, but cannot commit past a
+  HARD check. Only the confidence/actuation escalation is a genuine
+  human decision point (`:approved`/rejected via `:request-approval`).
+- Every commit or hold appends exactly one fact to the append-only
+  ledger (`store/append-ledger!`, called from both the `:commit` and
+  `:hold` StateGraph nodes) — nothing is ever rewritten or removed.
+
 ## License
 
 AGPL-3.0-or-later.
