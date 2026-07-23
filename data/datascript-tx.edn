@@ -1,0 +1,34 @@
+;; data/datascript-tx.edn — DataScript tx-data derived from src/statute/facts.cljc
+;; `statute.facts/catalog` (ADR-2607141700 Wave 0). Same shape as sibling files.
+;; Do not hand-edit; regenerate from the catalog.
+
+[#:statute{:id "lva.komerclikums"
+           :title "Komerclikums (Commercial Law)"
+           :jurisdiction "LVA"
+           :kind :law
+           :law-number "Adopted by the Saeima 13.04.2000, in force since 01.01.2002 (likumi.lv document id 5490); published in Latvijas Vēstnesis 158/160 (04.05.2000) and Latvijas Republikas Saeimas un Ministru Kabineta Ziņotājs 11 (01.06.2000), per likumi.lv's own print-metadata view. General commercial-law foundation for `marketentry.facts`'s Uzņēmumu reģistrs (Register of Enterprises) business-registration citation -- Article 1 defines a 'komersants' as a natural person or commercial company entered in the commercial register."
+           :url "https://likumi.lv/ta/id/5490-komerclikums"
+           :url-provenance :official-likumi-lv
+           :enacted-date "2002-01-01"
+           :retrieved-at "2026-07-23"
+           :topic [:corporate-governance :incorporation]}
+ #:statute{:id "lva.fizisko-personu-datu-apstrades-likums"
+           :title "Fizisko personu datu apstrādes likums (Personal Data Processing Law -- supplements EU Regulation 2016/679, GDPR, at the national level)"
+           :jurisdiction "LVA"
+           :kind :law
+           :law-number "Adopted by the Saeima 21.06.2018, in force since 05.07.2018 (likumi.lv document id 300099); published in Latvijas Vēstnesis 132 (04.07.2018), OP numurs 2018/132.1, per likumi.lv's own print-metadata view. This iteration independently confirmed Section 1's own text: 'The terms specified in Article 4 of the Regulation (EU) 2016/679 ... are used in the Law' -- the national law adopts GDPR's own terminology and operates within the GDPR framework, it does not restate GDPR's substantive rules."
+           :url "https://likumi.lv/ta/id/300099-fizisko-personu-datu-apstrades-likums"
+           :url-provenance :official-likumi-lv
+           :enacted-date "2018-07-05"
+           :retrieved-at "2026-07-23"
+           :topic [:data-protection :privacy]}
+ #:statute{:id "lva.darba-likums"
+           :title "Darba likums (Labour Law)"
+           :jurisdiction "LVA"
+           :kind :law
+           :law-number "Adopted by the Saeima 20.06.2001, in force since 01.06.2002 (likumi.lv document id 26019); published in Latvijas Vēstnesis 105 (06.07.2001) and Latvijas Republikas Saeimas un Ministru Kabineta Ziņotājs 15 (09.08.2001), per likumi.lv's own print-metadata view. This iteration independently confirmed Section 1 ('Employment relationship is governed by the Constitution ... this Law ... a collective agreement and working procedure regulations') and Section 2's scope (applies to all employers regardless of legal status, and to employees whose relationship with an employer is based on an employment contract; state/local-government officials with separately regulated compensation are exempt from most provisions)."
+           :url "https://likumi.lv/ta/id/26019-darba-likums"
+           :url-provenance :official-likumi-lv
+           :enacted-date "2002-06-01"
+           :retrieved-at "2026-07-23"
+           :topic [:labor :employment]}]

@@ -8,7 +8,9 @@ name: CI
 # siblings (all PUBLIC) into the expected relative paths -- no token
 # needed. Same pattern already used by cloud-itonami-iso3166-ago /
 # -usa / -jpn / -zaf / -bra. `culture.facts` (Wave 1 regional-culture
-# catalog) needs neither dep and is exercised by the same `:test` run.
+# catalog) and `statute.facts` (general-law compliance catalog,
+# ADR-2607141700) need neither dep and are exercised by the same
+# `:test` run.
 
 on:
   push:
@@ -49,6 +51,6 @@ jobs:
         with: { distribution: temurin, java-version: "21" }
       - uses: DeLaGuardo/setup-clojure@13.4
         with: { cli: latest }
-      - name: test (governor contract · facts · phases · registry · store · culture)
+      - name: test (governor contract · facts · phases · registry · store · culture · statute)
         working-directory: orgs/cloud-itonami/cloud-itonami-iso3166-lva
         run: clojure -M:dev:test

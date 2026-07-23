@@ -38,9 +38,31 @@
  -> [request-approval ->] commit/hold StateGraph, `store/append-ledger!`
  called from both the `:commit` and `:hold` nodes), phase.cljc (0->3
  rollout, `:filing/draft`/`:filing/submit` permanently excluded from
- every phase's `:auto` set). Tests cover the governor contract
- (including the IUB/VDAA distinction, both the clean path and the
- fused-claim HARD hold), facts, phase, registry, store parity
- (MemStore vs DatomicStore) and ledger append-only-ness across both
- backends, plus this repo's separate `culture` domain namespace, left
- untouched."}
+ every phase's `:auto` set). Plus src/statute/facts.cljc (general-law
+ compliance catalog, ADR-2607141700 `cloud-itonami-compliance-fact-
+ federation` -- orthogonal to marketentry.facts's procurement-only
+ scope: Komerclikums/Commercial Law (adopted 13.04.2000, in force since
+ 01.01.2002), Fizisko personu datu apstrādes likums/Personal Data
+ Processing Law (adopted 21.06.2018, in force since 05.07.2018,
+ supplements EU Regulation 2016/679 GDPR at the national level), Darba
+ likums/Labour Law (adopted 20.06.2001, in force since 01.06.2002) --
+ all three independently WebFetch-verified against likumi.lv (both the
+ normal document page and its print-friendly metadata view), none
+ duplicating or contradicting the IUB/VDAA platform-operator-split fact
+ `marketentry.facts` already owns, `lva.komerclikums` explicitly built
+ on top of (not re-deriving) `marketentry.facts`'s own Uzņēmumu
+ reģistrs citation), schema/statute.edn (DataScript schema) and
+ data/datascript-tx.edn (derived tx-data), mirroring the
+ cloud-itonami-iso3166-est/-isl/-swe/-nor/-dnk/-fin sibling convention.
+ Tests cover the governor contract (including the IUB/VDAA distinction,
+ both the clean path and the fused-claim HARD hold), facts, phase,
+ registry, store parity (MemStore vs DatomicStore) and ledger
+ append-only-ness across both backends, plus this repo's separate
+ `culture` domain namespace and the new `statute` catalog (including a
+ dedicated test asserting the statute catalog never re-fuses or
+ restates the IUB/VDAA split), left untouched. 43 tests / 157
+ assertions passing (up from 37 tests / 136 assertions before this
+ change -- the 6 new tests / 21 new assertions are all in
+ `statute.facts-test`), clj-kondo clean (0 errors, 8 non-fatal
+ unused-binding/unused-require warnings, all pre-existing in
+ `src/marketentry/*` and unrelated to this change)."}
