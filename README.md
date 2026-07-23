@@ -166,6 +166,48 @@ HARD violation the governor rejects unconditionally
 
 AGPL-3.0-or-later.
 
+## Statute catalog
+
+Alongside `marketentry.facts` (public-procurement market-entry only,
+narrow scope), this repo carries a **general-law compliance catalog**
+(ADR-2607141700, `cloud-itonami-compliance-fact-federation`) — statutes
+a company generally must track for compliance, orthogonal to the
+procurement-specific facts above:
+
+| Topic | Law | Source |
+|---|---|---|
+| corporate-governance / incorporation | Komerclikums (Commercial Law), adopted 13.04.2000, in force since 01.01.2002 | https://likumi.lv/ta/id/5490-komerclikums |
+| data-protection / privacy | Fizisko personu datu apstrādes likums (Personal Data Processing Law, supplements EU Regulation 2016/679 GDPR), adopted 21.06.2018, in force since 05.07.2018 | https://likumi.lv/ta/id/300099-fizisko-personu-datu-apstrades-likums |
+| labor / employment | Darba likums (Labour Law), adopted 20.06.2001, in force since 01.06.2002 | https://likumi.lv/ta/id/26019-darba-likums |
+
+- `src/statute/facts.cljc` — the catalog, source of truth.
+- `schema/statute.edn` — DataScript schema.
+- `data/datascript-tx.edn` — derived DataScript tx-data (regenerated
+  from the catalog, never hand-edited).
+
+This catalog is orthogonal to `marketentry.facts` and never repeats,
+duplicates, or contradicts it: not the Publisko iepirkumu likums (PIL)
+procurement law, not IUB's (Iepirkumu uzraudzības birojs) role as the
+legal/regulatory-oversight authority, and NOT the deliberately-kept-
+separate EIS platform-operator fact (VDAA — Valsts digitālās
+attīstības aģentūra, renamed from VRAA in 2024 — operates EIS
+technically; IUB does not) — that flagship IUB/VDAA distinction stays
+exactly where `marketentry.facts`/`marketentry.governor` already own
+it, and nothing here restates or re-fuses it. Where a real relationship
+exists it is built on, not re-derived: `lva.komerclikums` (Article 1
+defines a 'komersants' as a person/company entered in the commercial
+register) is the general-law foundation that `marketentry.facts`'s own
+Uzņēmumu reģistrs (Register of Enterprises) business-registration
+citation already assumes and administers — this catalog cites the
+STATUTE that creates the registration requirement; `marketentry.facts`
+cites the REGISTRY BODY (UR, ur.gov.lv) that executes it. Same
+provenance discipline as every catalog in this repo: every entry cites
+an official source (likumi.lv, operated by VSIA 'Latvijas Vēstnesis'
+under the Oficiālo publikāciju un tiesiskās informācijas likums) that
+was actually fetched and read, never invented. An item not in
+`statute.facts/catalog` has no spec-basis — extend the catalog, never
+fabricate an id/url.
+
 ## Culture catalog
 
 Alongside the market-entry / statute catalogs, this repo carries a
