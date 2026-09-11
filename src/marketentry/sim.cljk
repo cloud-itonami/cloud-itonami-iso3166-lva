@@ -1,5 +1,5 @@
 (ns marketentry.sim
-  "Demo driver -- `clojure -M:dev:run`. Walks a clean engagement
+  "Demo driver -- `kbb -M:dev:run`. Walks a clean engagement
   through intake -> jurisdiction assessment (EIS platform-operator
   claim correctly distinguishes IUB from VDAA) -> filing draft
   (escalate/approve/commit) -> filing submit (escalate/approve/
