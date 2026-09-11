@@ -79,8 +79,8 @@ before anything touches the SSoT (`store.cljc`, MemStore +
 DatomicStore via `io.github.kotoba-lang/langchain-store`).
 
 ```
-clojure -M:dev:test    # governor contract + facts + phase + registry + store
-clojure -M:dev:run     # walk a demo engagement through the full actor graph
+kbb -M:dev:test    # governor contract + facts + phase + registry + store
+kbb -M:dev:run     # walk a demo engagement through the full actor graph
 ```
 
 ### Governor checks (priority order, all HARD -- unoverridable by a human approver)
