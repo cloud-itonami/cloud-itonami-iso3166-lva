@@ -123,7 +123,7 @@ A `:jurisdiction/assess` proposal that states or implies "IUB
 operates EIS" -- omits the distinction, fuses the two authorities into
 one value, or cites either against the wrong catalogued value -- is a
 HARD violation the governor rejects unconditionally
-(`test/marketentry/governor_contract_test.clj`'s
+(`test/marketentry/governor_contract_test.cljk`'s
 `fused-platform-operator-claim-is-held-and-unoverridable` and
 `clean-assess-correctly-distinguishes-iub-from-vdaa`).
 
@@ -180,7 +180,7 @@ procurement-specific facts above:
 | data-protection / privacy | Fizisko personu datu apstrādes likums (Personal Data Processing Law, supplements EU Regulation 2016/679 GDPR), adopted 21.06.2018, in force since 05.07.2018 | https://likumi.lv/ta/id/300099-fizisko-personu-datu-apstrades-likums |
 | labor / employment | Darba likums (Labour Law), adopted 20.06.2001, in force since 01.06.2002 | https://likumi.lv/ta/id/26019-darba-likums |
 
-- `src/statute/facts.cljc` — the catalog, source of truth.
+- `src/statute/facts.cljk` — the catalog, source of truth.
 - `schema/statute.edn` — DataScript schema.
 - `data/datascript-tx.edn` — derived DataScript tx-data (regenerated
   from the catalog, never hand-edited).
@@ -216,7 +216,7 @@ Alongside the market-entry / statute catalogs, this repo carries a
 `com-junkawasaki/root`) — national dishes, protected products, beverages,
 crafts, festivals and heritage sites for Latvia:
 
-- `src/culture/facts.cljc` — the catalog, source of truth (keyed by
+- `src/culture/facts.cljk` — the catalog, source of truth (keyed by
   uppercase ISO3, mirroring `statute.facts`).
 - `schema/culture.edn` — DataScript schema.
 - `data/culture-tx.edn` — derived DataScript tx-data (regenerated from
