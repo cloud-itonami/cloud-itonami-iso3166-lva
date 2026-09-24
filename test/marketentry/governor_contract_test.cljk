@@ -12,7 +12,7 @@
     (legal/regulatory-oversight authority) from VDAA (EIS's separate
     technical operator, renamed from VRAA in 2024) and HARD-holds any
     proposal that fuses them."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [langgraph.graph :as g]
             [marketentry.store :as store]
             [marketentry.operation :as op]))
